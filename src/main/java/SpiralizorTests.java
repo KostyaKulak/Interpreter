@@ -1,5 +1,3 @@
-package com.kulak.codwars;
-
 import org.junit.Test;
 
 import static org.junit.Assert.assertArrayEquals;
@@ -49,18 +47,19 @@ public class SpiralizorTests {
     }
 
     @Test
-    public void test8() {
+    public void test9() {
         assertArrayEquals(
-                Spiralizor.spiralize(8),
+                Spiralizor.spiralize(9),
                 new int[][]{
-                        {1, 1, 1, 1, 1, 1, 1, 1},
-                        {0, 0, 0, 0, 0, 0, 0, 1},
-                        {1, 1, 1, 1, 1, 1, 0, 1},
-                        {1, 0, 0, 0, 0, 1, 0, 1},
-                        {1, 0, 1, 1, 0, 1, 0, 1},
-                        {1, 0, 1, 1, 1, 1, 0, 1},
-                        {1, 0, 0, 0, 0, 0, 0, 1},
-                        {1, 1, 1, 1, 1, 1, 1, 1},
+                        {1, 1, 1, 1, 1, 1, 1, 1, 1},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 1},
+                        {1, 1, 1, 1, 1, 1, 1, 0, 1},
+                        {1, 0, 0, 0, 0, 0, 1, 0, 1},
+                        {1, 0, 1, 1, 1, 0, 1, 0, 1},
+                        {1, 0, 1, 0, 0, 0, 1, 0, 1},
+                        {1, 0, 1, 1, 1, 1, 1, 0, 1},
+                        {1, 0, 0, 0, 0, 0, 0, 0, 1},
+                        {1, 1, 1, 1, 1, 1, 1, 1, 1}
                 });
     }
 
