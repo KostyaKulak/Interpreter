@@ -1,7 +1,17 @@
-package dna
+fun persistence(num: Int): Int {
+    var digit = num
+    var count = 0
+    while (digit > 9) {
+        digit = multiply(digits(digit))
+        count++
+    }
+    return count
+}
 
-import java.util.stream.Collectors
+fun digits(num: Int) = num.toString().split("").filter { it.isNotBlank() }.map { it.toInt() }.toList()
 
-fun makeComplement(dna: String): String = dna.split("").map { dict[it] }.stream().collect(Collectors.joining())
-
-val dict = mapOf("A" to "T", "G" to "C", "T" to "A", "C" to "G", "" to "")
+fun multiply(digits: List<Int>): Int {
+    var res = 1
+    digits.forEach { res *= it }
+    return res
+}
