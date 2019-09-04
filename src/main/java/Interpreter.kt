@@ -1,30 +1,12 @@
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+package partlist
 
-public class Interpreter {
-    Map<String, Double> variables;
 
-    public Interpreter() {
-        variables = new HashMap<>();
+fun partlist(arr: Array<String>): Array<Array<String>> {
+    var res = arrayOfNulls<Array<String>>(arr.size - 1)
+    (0 until arr.size - 1).forEach {
+        var str1 = (0..it).joinToString(separator = " ") { it1 -> arr[it1] }
+        var str2 = (it + 1 until arr.size).joinToString(separator = " ") { it1 -> arr[it1] }
+        res[it] = arrayOf(str1, str2)
     }
-
-    public Double input(String input) {
-        Deque<String> tokens = tokenize(input);
-
-        return 0.0;
-    }
-
-    private static Deque<String> tokenize(String input) {
-        Deque<String> tokens = new LinkedList<>();
-        Pattern pattern = Pattern.compile("=>|[-+*/%=\\(\\)]|[A-Za-z_][A-Za-z0-9_]*|[0-9]*(\\.?[0-9]+)");
-        Matcher m = pattern.matcher(input);
-        while (m.find()) {
-            tokens.add(m.group());
-        }
-        return tokens;
-    }
+    return res as Array<Array<String>>
 }

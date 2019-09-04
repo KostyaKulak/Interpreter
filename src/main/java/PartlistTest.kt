@@ -1,44 +1,23 @@
-import org.junit.Test;
+package partlist
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import org.junit.Assert.*
+import java.util.Arrays
+import org.junit.Test
+import java.util.Random
 
-public class ExampleInterpreterTest {
-    @Test
-    public void basicTests() {
-        Interpreter interpreter = new Interpreter();
-
-        // Basic arithmetic
-        assertEquals(2, interpreter.input("1 + 1"), 0.0);
-        assertEquals(1, interpreter.input("2 - 1"), 0.0);
-        assertEquals(6, interpreter.input("2 * 3"), 0.0);
-        assertEquals(2, interpreter.input("8 / 4"), 0.0);
-        assertEquals(3, interpreter.input("7 % 4"), 0.0);
-
-
-        // Variables
-        assertEquals(1, interpreter.input("x = 1"), 0.0);
-        assertEquals(1, interpreter.input("x"), 0.0);
-        assertEquals(4, interpreter.input("x + 3"), 0.0);
-        assertFail("input: 'y'", () -> interpreter.input("y"));
-
-        // Functions
-        interpreter.input("fn avg x y => (x + y) / 2");
-        assertEquals(3, interpreter.input("avg 4 2"), 0.0);
-        assertFail("input: 'avg 7'", () -> interpreter.input("avg 7"));
-        assertFail("input: 'avg 7 2 4'", () -> interpreter.input("avg 7 2 4"));
-
-        // Conflicts
-        assertFail("input: 'fn x => 0'", () -> interpreter.input("fn x => 0"));
-        assertFail("input: 'avg = 5'", () -> interpreter.input("avg = 5"));
+class PartlistTest {
+    private fun testing(actual:String, expected:String) {
+        assertEquals(expected, actual)
     }
+    @Test
+    fun test() {
+        println("Fixed Tests partlist")
+        var s1 = arrayOf<String>("cdIw", "tzIy", "xDu", "rThG")
+        var a = "[[cdIw, tzIy xDu rThG], [cdIw tzIy, xDu rThG], [cdIw tzIy xDu, rThG]]"
+        testing(Arrays.deepToString(partlist(s1)), a)
+        s1 = arrayOf<String>("I", "wish", "I", "hadn't", "come")
+        a = "[[I, wish I hadn't come], [I wish, I hadn't come], [I wish I, hadn't come], [I wish I hadn't, come]]"
+        testing(Arrays.deepToString(partlist(s1)), a)
 
-    private static void assertFail(String msg, Runnable runnable) {
-        try {
-            runnable.run();
-            fail(msg);
-        } catch (Exception e) {
-            // Ok
-        }
     }
 }
