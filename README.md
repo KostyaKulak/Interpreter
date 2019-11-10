@@ -1,2 +1,2 @@
 # Codewars
-https://www.codewars.com/kata/simple-interactive-interpreter/train/java
+https://www.codewars.com/kata/faberge-easter-eggs-crush-test-linear/train/kotlin
