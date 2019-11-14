@@ -1,17 +1,16 @@
-Your job is to write a function which increments a string, to create a new string.
+Define a function that takes in two non-negative integers a and b and returns the last decimal digit of a^b. Note that a and b may be very large!
 
-If the string already ends with a number, the number should be incremented by 1.
-If the string does not end with a number. the number 1 should be appended to the new string.
-###Examples:
+For example, the last decimal digit of 9^7 is 9, since 9^7 = 4782969. The last decimal digit of (2^200)^(2^300), which has over 10^92 decimal digits, is 6. Also, please take 0^0 to be 1.
 
-foo -> foo1
+You may assume that the input will always be valid.
 
-foobar23 -> foobar24
+Examples
+lastDigit(4, 1)                # returns 4
+lastDigit(4, 2)                # returns 6
+lastDigit(9, 7)                # returns 9
+lastDigit(10, 10 ** 10)        # returns 0
+lastDigit(2 ** 200, 2 ** 300)  # returns 6
+Remarks
+JavaScript, C++, R, PureScript
+Since these languages don't have native arbitrarily large integers, your arguments are going to be strings representing non-negative integers instead.
 
-foo0042 -> foo0043
-
-foo9 -> foo10
-
-foo099 -> foo100
-
-###Attention: If the number has leading zeros the amount of digits should be considered.
