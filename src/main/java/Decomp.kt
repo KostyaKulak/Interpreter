@@ -14,7 +14,7 @@ object Decomp {
         return result.toString().replace(Regex("\\s\$"), "")
     }
 
-    fun createTree(key: Long) {
+    private fun createTree(key: Long) {
         for (i in key downTo 1) {
             trees.add(Tree(i))
         }
@@ -23,47 +23,34 @@ object Decomp {
 
     private fun search(tree: Tree): List<Tree> {
         val result = mutableListOf<Tree>()
-        if (tree.leafs.isNotEmpty()) {
-            loop@ for (leaf in tree.leafs) {
-                if (!leaf.visited) {
-                    result.add(tree)
-                    leaf.visited = true
-                    leaf.left = tree.left - leaf.square
-                    when {
-                        leaf.left == 0L -> {
-                            result.add(leaf)
-                            break@loop
-                        }
-                        leaf.left > 0L -> {
-                            val list = search(leaf)
-                            if (list.isNotEmpty()) {
-                                result.addAll(list)
-                                break@loop
-                            } else {
-                                leaf.leafs.forEach { it.visited = false }
-                                result.clear()
-                            }
-                        }
-                        else -> {
-                            leaf.leafs.forEach { it.visited = false }
-                            result.clear()
-                        }
+        loop@ for (i in tree.leafs) {
+            result.add(tree)
+            trees[i].left = tree.left - trees[i].square
+            when {
+                trees[i].left == 0L -> {
+                    result.add(trees[i])
+                    break@loop
+                }
+                trees[i].left > 0L -> {
+                    val list = search(trees[i])
+                    if (list.isNotEmpty()) {
+                        result.addAll(list)
+                        break@loop
                     }
                 }
             }
-        } else {
-            result.add(tree)
+            result.clear()
         }
         return result
     }
 
-    private val Tree.leafs get() = trees.subList((trees.size - key).toInt(), trees.size)
+    private val Tree.leafs get() = (trees.size - key).toInt() until trees.size
 }
 
-class Tree(var key: Long, val square: Long = key * key, var visited: Boolean = false, var left: Long = square)
+class Tree(var key: Long, val square: Long = key * key, var left: Long = square)
 
 fun main() {
     val time = System.currentTimeMillis()
-    println(Decomp.decompose(12))
+    println(Decomp.decompose(11))
     println(System.currentTimeMillis() - time)
 }
