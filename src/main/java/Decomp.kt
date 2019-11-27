@@ -13,12 +13,12 @@ object Decomp {
             result.append("null")
         } else {
             val tree = createTree(n)
-            tree.search().filter { it.key != n }.map { it.key }.sorted().forEach { result.append(it).append(" ") }
+            tree.search().filter { it.key != n }.reversed().map { it.key }.forEach { result.append(it).append(" ") }
         }
         return result.toString().replace(Regex("\\s\$"), "")
     }
 
-    fun createTree(key: Long): Tree = if (key == 0L) {
+    private fun createTree(key: Long): Tree = if (key == 0L) {
         trees[0]
     } else if (key == 1L) {
         trees[1]
@@ -30,41 +30,32 @@ object Decomp {
             }
             tree.leafs.add(trees[i.toInt()])
         }
+        tree.leafs.reverse()
         tree
     }
 }
 
-class Tree(var key: Long, var leafs: MutableList<Tree> = mutableListOf(), val square: Long = key * key, var visited: Boolean = false, var left: Long = square) {
+class Tree(var key: Long, var leafs: MutableList<Tree> = mutableListOf(), val square: Long = key * key, var left: Long = square) {
     fun search(): List<Tree> {
-        leafs.sortWith(TreeComparator())
         val result = mutableListOf<Tree>()
         if (leafs.isNotEmpty()) {
             loop@ for (leaf in leafs) {
-                if (!leaf.visited) {
-                    result.add(this)
-                    leaf.visited = true
-                    leaf.left = left - leaf.square
-                    when {
-                        leaf.left == 0L -> {
-                            result.add(leaf)
+                result.add(this)
+                leaf.left = left - leaf.square
+                when {
+                    leaf.left == 0L -> {
+                        result.add(leaf)
+                        break@loop
+                    }
+                    leaf.left > 0L -> {
+                        val list = leaf.search()
+                        if (list.isNotEmpty()) {
+                            result.addAll(list)
                             break@loop
-                        }
-                        leaf.left > 0L -> {
-                            val list = leaf.search()
-                            if (list.isNotEmpty()) {
-                                result.addAll(list)
-                                break@loop
-                            } else {
-                                leaf.leafs.forEach { it.visited = false }
-                                result.clear()
-                            }
-                        }
-                        else -> {
-                            leaf.leafs.forEach { it.visited = false }
-                            result.clear()
                         }
                     }
                 }
+                result.clear()
             }
         } else {
             result.add(this)
@@ -73,8 +64,6 @@ class Tree(var key: Long, var leafs: MutableList<Tree> = mutableListOf(), val sq
     }
 }
 
-class TreeComparator : Comparator<Tree> {
-    override fun compare(o1: Tree?, o2: Tree?): Int {
-        return o2!!.key.compareTo(o1!!.key)
-    }
+fun main() {
+    println(Decomp.decompose(11))
 }
