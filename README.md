@@ -1,66 +1,37 @@
-# Codewars
-Given a number of points on a plane, your task is to find two points with the smallest distance between them in linearithmic O(n log n) time.
-Example  
-  1  2  3  4  5  6  7  8  9  
-1  
-2    . A
-3                . D  
-4                   . F         
-5             . C  
-6                
-7                . E  
-8    . B  
-9                   . G  
-For the plane above, the input will be:   
-[  
-  [2,2], // A  
-  [2,8], // B  
-  [5,5], // C  
-  [6,3], // D  
-  [6,7], // E  
-  [7,4], // F  
-  [7,9]  // G  
-]  
-=> closest pair is: [[6,3],[7,4]] or [[7,4],[6,3]]
-(both answers are valid)
-The two points that are closest to each other are D and F.
-Expected answer should be an array with both points in any order.
-# Goal
-The goal is to come up with a function that can find two closest points for any arbitrary array of points, in a linearithmic time. 
+John and his wife Ann have decided to go to Codewars.
 
-Point class is preloaded for you as:
-```java
-public class Point {
-    public double x, y;
+On first day Ann will do one kata and John - he wants to know how it is working - 0 kata.
 
-    public Point() {
-        x = y = 0.0;
-    }
+Let us call a(n) the number of katas done by Ann at day n. We have a(0) = 1 and in the same manner j(0) = 0 (or a(1) = 1 and j(1) = 0 for languages that have arrays with indices beginning at 1).
 
-    public Point(double x, double y) {
-        this.x = x;
-        this.y = y;
-    }
+They have chosen the following rules:
 
-    @Override
-    public String toString() {
-        return String.format("(%f, %f)", x, y);
-    }
+On day n the number of katas done by Ann should be n minus the number of katas done by John at day t, t being equal to the number of katas done by Ann herself at day n - 1.
 
-    @Override
-    public int hashCode() {
-        return Double.hashCode(x) ^ Double.hashCode(y);
-    }
+On day n the number of katas done by John should be n minus the number of katas done by Ann at day t, t being equal to the number of katas done by John himself at day n - 1.
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof Point) {
-            Point other = (Point) obj;
-            return x == other.x && y == other.y;
-        } else {
-            return false;
-        }
-    }
-}
-```
+Whoops! I think they need to lay out a little clearer exactly what there're getting themselves into!
 
+Could you write:
+1) two functions ann and john (parameter n) giving the list of the numbers of katas Ann and John should take on the first n days (see first examples below)?
+2) The total number of katas taken by ann function sum_ann(n) and john function sum_john(n) - on the first n days?
+The functions in 1) are not tested in Fortran and not tested in Shell.
+
+Examples:
+john(11) -->  [0, 0, 1, 2, 2, 3, 4, 4, 5, 6, 6]
+ann(6) -->  [1, 1, 2, 2, 3, 3]
+
+sum_john(75) -->  1720
+sum_ann(150) -->  6930
+Shell Note:
+sumJohnAndAnn has two parameters:
+
+first one : n (number of days, $1)
+
+second one : which($2) ->
+
+1 for getting John's sum
+
+2 for getting Ann's sum.
+
+See "Sample Tests".
