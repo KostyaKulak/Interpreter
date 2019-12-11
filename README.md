@@ -1,37 +1,21 @@
-John and his wife Ann have decided to go to Codewars.
+We search positive integer numbers, with at most 3 digits, such as the sum of the cubes of their digits is the number itself; we will call them "cubic" numbers.
 
-On first day Ann will do one kata and John - he wants to know how it is working - 0 kata.
+153 is such a "cubic" number : 1^3 + 5^3 + 3^3 = 153
+These "cubic" numbers of at most 3 digits are easy to find, even by hand, so they are "hidden" with other numbers and characters in a string.
 
-Let us call a(n) the number of katas done by Ann at day n. We have a(0) = 1 and in the same manner j(0) = 0 (or a(1) = 1 and j(1) = 0 for languages that have arrays with indices beginning at 1).
+The task is to found, or not, the "cubic" numbers in the string and then to make the sum of these "cubic" numbers found in the string, if any, and to return a string such as:
 
-They have chosen the following rules:
+"number1 number2 (and so on if necessary) sumOfCubicNumbers Lucky" 
+if "cubic" numbers number1, number2, ... were found. The numbers in the output are to be in the order in which they are encountered in the input string.
 
-On day n the number of katas done by Ann should be n minus the number of katas done by John at day t, t being equal to the number of katas done by Ann herself at day n - 1.
+If no cubic numbers are found return the string:
 
-On day n the number of katas done by John should be n minus the number of katas done by Ann at day t, t being equal to the number of katas done by John himself at day n - 1.
-
-Whoops! I think they need to lay out a little clearer exactly what there're getting themselves into!
-
-Could you write:
-1) two functions ann and john (parameter n) giving the list of the numbers of katas Ann and John should take on the first n days (see first examples below)?
-2) The total number of katas taken by ann function sum_ann(n) and john function sum_john(n) - on the first n days?
-The functions in 1) are not tested in Fortran and not tested in Shell.
-
+"Unlucky".
 Examples:
-john(11) -->  [0, 0, 1, 2, 2, 3, 4, 4, 5, 6, 6]
-ann(6) -->  [1, 1, 2, 2, 3, 3]
 
-sum_john(75) -->  1720
-sum_ann(150) -->  6930
-Shell Note:
-sumJohnAndAnn has two parameters:
+ s = "aqdf& 0 1 xyz 153 777.777" must return "0 1 153 154 Lucky"
 
-first one : n (number of days, $1)
+ s = "QK29 45[&erui" must return "Unlucky".
+Note: In the string "001234" where 3 digits or more follow each other the fist packet to examine is "001" and the following is "234". If a packet of at most three digits has been taken, whether or not "cubic", it's over for that packet.
 
-second one : which($2) ->
-
-1 for getting John's sum
-
-2 for getting Ann's sum.
-
-See "Sample Tests".
+When a continous string of digits exceeds 3, the string is split into groups of 3 from the left. The last grouping could have 3, 2 or 1 digits. e.g "24172410" becomes 3 strings comprising "241", "724" and "10" e.g "0785" becomes 2 strings comprising "078" and "5".
