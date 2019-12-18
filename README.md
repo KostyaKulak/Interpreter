@@ -1,37 +1,59 @@
-John and his wife Ann have decided to go to Codewars.
+Your granny, who lives in town X0, has friends. These friends are given in an array, for example: array of friends is
 
-On first day Ann will do one kata and John - he wants to know how it is working - 0 kata.
+[ "A1", "A2", "A3", "A4", "A5" ].
+The order of friends is this array must not be changed since this order gives the order in which they will be visited.
 
-Let us call a(n) the number of katas done by Ann at day n. We have a(0) = 1 and in the same manner j(0) = 0 (or a(1) = 1 and j(1) = 0 for languages that have arrays with indices beginning at 1).
+These friends inhabit towns and you have an array with friends and towns, for example:
 
-They have chosen the following rules:
+[ ["A1", "X1"], ["A2", "X2"], ["A3", "X3"], ["A4", "X4"] ]
+or
+[ ("A1", "X1"), ("A2", "X2"), ("A3", "X3"), ("A4", "X4") ]
+or
+(C)
+{"A1", "X1", "A2", "X2", "A3", "X3", "A4", "X4"}
+which means A1 is in town X1, A2 in town X2... It can happen that we don't know the town of one of the friends.
 
-On day n the number of katas done by Ann should be n minus the number of katas done by John at day t, t being equal to the number of katas done by Ann herself at day n - 1.
+Your granny wants to visit her friends and to know how many miles she will have to travel.
 
-On day n the number of katas done by John should be n minus the number of katas done by Ann at day t, t being equal to the number of katas done by John himself at day n - 1.
+You will make the circuit that permits her to visit her friends. For example here the circuit will contain:
 
-Whoops! I think they need to lay out a little clearer exactly what there're getting themselves into!
+X0, X1, X2, X3, X4, X0 
+and you must compute the total distance
 
-Could you write:
-1) two functions ann and john (parameter n) giving the list of the numbers of katas Ann and John should take on the first n days (see first examples below)?
-2) The total number of katas taken by ann function sum_ann(n) and john function sum_john(n) - on the first n days?
-The functions in 1) are not tested in Fortran and not tested in Shell.
+X0X1 + X1X2 + .. + X4X0.
+For the distance, fortunately, you have a map (and a hashmap) that gives each distance X0X1, X0X2 and so on. For example:
 
-Examples:
-john(11) -->  [0, 0, 1, 2, 2, 3, 4, 4, 5, 6, 6]
-ann(6) -->  [1, 1, 2, 2, 3, 3]
+[ ["X1", 100.0], ["X2", 200.0], ["X3", 250.0], ["X4", 300.0] ]
+or
+Map("X1" -> 100.0, "X2" -> 200.0, "X3" -> 250.0, "X4" -> 300.0)
+or (Coffeescript, Javascript)
+['X1',100.0, 'X2',200.0, 'X3',250.0, 'X4',300.0 ]
+or
+(C)
+{"X1", "100.0", "X2", "200.0", "X3", "250.0", "X4", "300.0"}
+which means that X1 is at 100.0 miles from X0, X2 at 200.0 miles from X0, etc...
 
-sum_john(75) -->  1720
-sum_ann(150) -->  6930
-Shell Note:
-sumJohnAndAnn has two parameters:
+More fortunately (it's not real life, it's a story...), the towns X0, X1, ..Xn are placed in the following manner:
 
-first one : n (number of days, $1)
+X0X1X2 is a right triangle with the right angle in X1, X0X2X3 is a right triangle with the right angle in X2, etc...
 
-second one : which($2) ->
+If a town Xi is not visited you will suppose that the triangle
 
-1 for getting John's sum
+X0Xi-1Xi+1 is still a right triangle.
 
-2 for getting Ann's sum.
+(Ref: https://en.wikipedia.org/wiki/Pythagoras#Pythagorean_theorem)
 
-See "Sample Tests".
+Task
+Can you help your granny and give her the distance to travel?
+
+Notes
+If you have some difficulty to see the tour I made a non terrific but maybe useful drawing:
+
+alternative text
+
+All languages
+See the data type of the parameters in the examples test cases.
+
+Towns can have other names that X0, X1, X2, ... Xn
+
+"tour" returns an int which is the floor of the total distance.
