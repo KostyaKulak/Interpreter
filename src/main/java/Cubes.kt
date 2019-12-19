@@ -1,52 +1,26 @@
-package solution
-
-import kotlin.streams.toList
-
-object Cubes {
-    fun isSumOfCubes(s: String): String {
-        val digits = s.stripNonDigits()
-        val result = digits
-            .asSequence()
-            .map { it to it.replace(Regex("^0+"), "") }
-            .map {
-                if (it.second.isEmpty()) it.first to "0" else it
-            }
-            .filter { it.second.isCubic() }
-            .map { it.first }
-            .toList()
-        return if (result.isEmpty()) {
-            "Unlucky"
-        } else {
-            "${result.joinToString ( " " )} ${result
-                .map { it.replace(Regex("^0+"), "") }
-                .filter { it.isNotEmpty() }
-                .map { it.toInt() }
-                .sum()
-            } Lucky"
+fun josephusSurvivor(n: Int, k: Int): Int = when (n) {
+    1 -> 1
+    2 -> if (k % 2 == 0) 1 else 2
+    else -> {
+        var map = (0 until n).map { it to false }.toMap().toMutableMap()
+        var step = if (n >= k) k else k - n
+        var first = step - 1
+        while (map.size != 2) {
+            (first until map.size step step)
+                .filter { !map.getAt(it).value }
+                .forEach { map.getAt(it).setValue(true) }
+            val count = map.size - 1
+            step = if (map.size >= k) k else k - (map.size - 1)
+            first = if (map.size >= k) map.size - count / step * step else step - 1
+            map = map.filter { !it.value }.toMutableMap()
         }
+        (if (step % 2 == 0) map.getAt(0).key else map.getAt(1).key).inc()
     }
+}
 
-    private fun String.stripNonDigits(): List<String> {
-        val sb = StringBuilder(this.length)
-        this.forEach { element ->
-            if (element.toInt() in 48..57) sb.append(element)
-            if (element == ' ') sb.append(' ')
-        }
-        return sb.split(Regex("\\s+"))
-            .map {
-                (0..it.length step 3)
-                    .map { i -> it.substring(i, if (i + 3 < it.length) i + 3 else it.length) }
-            }
-            .stream()
-            .flatMap { it.stream() }
-            .filter { it.isNotEmpty() }
-            .toList()
-    }
-
-    private fun String.isCubic(): Boolean =
-        this.split("")
-            .filter { it.isNotEmpty() }
-            .map { it.toInt() }
-            .map { it * it * it }
-            .sum() == this.toInt()
+fun Map<Int, Boolean>.getLast() = entries.stream().filter { !it.value }.findFirst().get().key.inc()
+fun <T, K> MutableMap<T, K>.getAt(i: Int): MutableMap.MutableEntry<T, K> {
+    val iter = this.iterator()
+    repeat(i) { iter.next() }
+    return iter.next()
 }

@@ -1,21 +1,16 @@
-We search positive integer numbers, with at most 3 digits, such as the sum of the cubes of their digits is the number itself; we will call them "cubic" numbers.
+In this kata you have to correctly return who is the "survivor", ie: the last element of a Josephus permutation.
 
-153 is such a "cubic" number : 1^3 + 5^3 + 3^3 = 153
-These "cubic" numbers of at most 3 digits are easy to find, even by hand, so they are "hidden" with other numbers and characters in a string.
+Basically you have to assume that n people are put into a circle and that they are eliminated in steps of k elements, like this:
 
-The task is to found, or not, the "cubic" numbers in the string and then to make the sum of these "cubic" numbers found in the string, if any, and to return a string such as:
+josephus_survivor(7,3) => means 7 people in a circle;
+one every 3 is eliminated until one remains
+[1,2,3,4,5,6,7] - initial sequence
+[1,2,4,5,6,7] => 3 is counted out
+[1,2,4,5,7] => 6 is counted out
+[1,4,5,7] => 2 is counted out
+[1,4,5] => 7 is counted out
+[1,4] => 5 is counted out
+[4] => 1 counted out, 4 is the last element - the survivor!
+The above link about the "base" kata description will give you a more thorough insight about the origin of this kind of permutation, but basically that's all that there is to know to solve this kata.
 
-"number1 number2 (and so on if necessary) sumOfCubicNumbers Lucky" 
-if "cubic" numbers number1, number2, ... were found. The numbers in the output are to be in the order in which they are encountered in the input string.
-
-If no cubic numbers are found return the string:
-
-"Unlucky".
-Examples:
-
- s = "aqdf& 0 1 xyz 153 777.777" must return "0 1 153 154 Lucky"
-
- s = "QK29 45[&erui" must return "Unlucky".
-Note: In the string "001234" where 3 digits or more follow each other the fist packet to examine is "001" and the following is "234". If a packet of at most three digits has been taken, whether or not "cubic", it's over for that packet.
-
-When a continous string of digits exceeds 3, the string is split into groups of 3 from the left. The last grouping could have 3, 2 or 1 digits. e.g "24172410" becomes 3 strings comprising "241", "724" and "10" e.g "0785" becomes 2 strings comprising "078" and "5".
+Notes and tips: using the solution to the other kata to check your function may be helpful, but as much larger numbers will be used, using an array/list to compute the number of the survivor may be too slow; you may assume that both n and k will always be >=1.
