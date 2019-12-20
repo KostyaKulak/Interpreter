@@ -1,16 +1,27 @@
-In this kata you have to correctly return who is the "survivor", ie: the last element of a Josephus permutation.
+One man (lets call him Eulampy) has a collection of some almost identical Fabergè eggs. One day his friend Tempter said to him:
 
-Basically you have to assume that n people are put into a circle and that they are eliminated in steps of k elements, like this:
+Do you see that skyscraper? And can you tell me a maximal floor that if you drop your egg from will not crack it?
+No, - said Eulampy.
+But if you give me N eggs, - says Tempter - I'l tell you an answer.
+Deal - said Eulampy. But I have one requirement before we start this: if I will see more than M falls of egg, my heart will be crushed instead of egg. So you have only M trys to throw eggs. Would you tell me an exact floor with this limitation?
+Task
+Your task is to help Tempter - write a function
 
-josephus_survivor(7,3) => means 7 people in a circle;
-one every 3 is eliminated until one remains
-[1,2,3,4,5,6,7] - initial sequence
-[1,2,4,5,6,7] => 3 is counted out
-[1,2,4,5,7] => 6 is counted out
-[1,4,5,7] => 2 is counted out
-[1,4,5] => 7 is counted out
-[1,4] => 5 is counted out
-[4] => 1 counted out, 4 is the last element - the survivor!
-The above link about the "base" kata description will give you a more thorough insight about the origin of this kind of permutation, but basically that's all that there is to know to solve this kata.
+height :: Integer -> Integer -> Integer
+height n m = -- see text
+that takes 2 arguments - the number of eggs n and the number of trys m - you should calculate maximum scyscrapper height (in floors), in which it is guaranteed to find an exactly maximal floor from which that an egg won't crack it.
 
-Notes and tips: using the solution to the other kata to check your function may be helpful, but as much larger numbers will be used, using an array/list to compute the number of the survivor may be too slow; you may assume that both n and k will always be >=1.
+Which means,
+
+You can throw an egg from a specific floor every try
+Every egg has the same, certain durability - if they're thrown from a certain floor or below, they won't crack. Otherwise they crack.
+You have n eggs and m tries
+What is the maxmimum height, such that you can always determine which floor the target floor is when the target floor can be any floor between 1 to this maximum height?
+Examples
+height 0 14 = 0
+height 2 0  = 0
+height 2 14 = 105
+height 7 20 = 137979
+Data range
+n <= 20000
+m <= 20000
