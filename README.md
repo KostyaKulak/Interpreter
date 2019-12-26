@@ -1,27 +1,63 @@
-One man (lets call him Eulampy) has a collection of some almost identical Fabergè eggs. One day his friend Tempter said to him:
+This is the subsequent Kata of this one.
 
-Do you see that skyscraper? And can you tell me a maximal floor that if you drop your egg from will not crack it?
-No, - said Eulampy.
-But if you give me N eggs, - says Tempter - I'l tell you an answer.
-Deal - said Eulampy. But I have one requirement before we start this: if I will see more than M falls of egg, my heart will be crushed instead of egg. So you have only M trys to throw eggs. Would you tell me an exact floor with this limitation?
-Task
-Your task is to help Tempter - write a function
+In this Kata you should convert the representation of "type"s, from Kotlin to Java, and you don't have to know Kotlin or Java in advance :D
 
-height :: Integer -> Integer -> Integer
-height n m = -- see text
-that takes 2 arguments - the number of eggs n and the number of trys m - you should calculate maximum scyscrapper height (in floors), in which it is guaranteed to find an exactly maximal floor from which that an egg won't crack it.
+If you successfully parsed the input, return the result, otherwise give me null.
 
-Which means,
+In Kotlin and Java, C-style identifiers are valid simple types. Like, _A, ice1000, Voile.
 
-You can throw an egg from a specific floor every try
-Every egg has the same, certain durability - if they're thrown from a certain floor or below, they won't crack. Otherwise they crack.
-You have n eggs and m tries
-What is the maxmimum height, such that you can always determine which floor the target floor is when the target floor can be any floor between 1 to this maximum height?
-Examples
-height 0 14 = 0
-height 2 0  = 0
-height 2 14 = 105
-height 7 20 = 137979
-Data range
-n <= 20000
-m <= 20000
+We can have generic parameters, which are valid in both Kotlin&Java: List<String>, or more than one parameters: F<A,B>.
+
+We can specify the complete package name of the types, like java.util.List<String>.
+
+We can also have types of nested classes: List<Long>.Iterator<Long>.
+
+We have covariance: Option<out T> in Kotlin and Option<? extends T> in Java (be careful about the spaces, there are spaces between ? and extends, extends and T).
+
+Contravariance as well: Maker<in T> in Kotlin and Maker<? super T> in Java (again, spaces).
+
+In Kotlin, there's something called "star projection" like List<*>, and you should translate it into List<?>.
+
+Also, you should rename Int(kotlin.Int) into Integer(java.lang.Integer), and Unit into Void.
+
+Finally, the most complex part of this Kata -- the types of lambda expressions.
+
+(A) -> B in Kotlin, should be transpiled into Function1<A,B> in Java (be careful, here we don't have spaces in Java).
+() -> B -> Function0<B>
+(A, B) -> C -> Function2<A,B,C>
+
+So let's see the strict bnf definition:
+
+Kotlin
+name           ::= <valid java identifier>
+typeParam      ::= "*"
+                 | "in " type
+                 | "out " type
+                 | type
+typeParams     ::= typeParam [ "," typeParams ]
+simpleUserType ::= name [ "<" typeParams ">" ]
+userType       ::= simpleUserType [ "." userType ]
+parameters     ::= type [ "," parameters ]
+functionType   ::= "(" [ parameters ] ")" "->" type
+type           ::= functionType
+                 | name
+                 | userType
+Java
+name           ::= <valid java identifier>
+typeParam      ::= type
+                 | "?"
+                 | "? super " type
+                 | "? extends " type
+typeParams     ::= typeParam [ "," typeParams ]
+simpleUserType ::= name [ "<" params ">" ]
+userType       ::= simpleUserType [ "." userType ]
+parameters     ::= type [ "," parameters ]
+functionType   ::= "Function" ++ (number of parameters) "<" [ parameters "," ] type ">"
+type           ::= functionType
+                 | name
+                 | userType
+(++ in bnf means there shouldn't be spaces there)
+
+for more information please see the example tests.
+
+Enjoy!
