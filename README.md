@@ -1,37 +1,12 @@
-John and his wife Ann have decided to go to Codewars.
+A format for expressing an ordered list of integers is to use a comma separated list of either individual integers
+or a range of integers denoted by the starting integer separated from the end integer in the range by a dash, '-'. 
+The range includes all integers in the interval including both endpoints. 
+It is not considered a range unless it spans at least 3 numbers. For example ("12, 13, 15-17")
+Complete the solution so that it takes a list of integers in increasing order and returns a correctly formatted string 
+in the range format.
 
-On first day Ann will do one kata and John - he wants to know how it is working - 0 kata.
+Example:
 
-Let us call a(n) the number of katas done by Ann at day n. We have a(0) = 1 and in the same manner j(0) = 0 (or a(1) = 1 and j(1) = 0 for languages that have arrays with indices beginning at 1).
-
-They have chosen the following rules:
-
-On day n the number of katas done by Ann should be n minus the number of katas done by John at day t, t being equal to the number of katas done by Ann herself at day n - 1.
-
-On day n the number of katas done by John should be n minus the number of katas done by Ann at day t, t being equal to the number of katas done by John himself at day n - 1.
-
-Whoops! I think they need to lay out a little clearer exactly what there're getting themselves into!
-
-Could you write:
-1) two functions ann and john (parameter n) giving the list of the numbers of katas Ann and John should take on the first n days (see first examples below)?
-2) The total number of katas taken by ann function sum_ann(n) and john function sum_john(n) - on the first n days?
-The functions in 1) are not tested in Fortran and not tested in Shell.
-
-Examples:
-john(11) -->  [0, 0, 1, 2, 2, 3, 4, 4, 5, 6, 6]
-ann(6) -->  [1, 1, 2, 2, 3, 3]
-
-sum_john(75) -->  1720
-sum_ann(150) -->  6930
-Shell Note:
-sumJohnAndAnn has two parameters:
-
-first one : n (number of days, $1)
-
-second one : which($2) ->
-
-1 for getting John's sum
-
-2 for getting Ann's sum.
-
-See "Sample Tests".
+solution([-6, -3, -2, -1, 0, 1, 3, 4, 5, 7, 8, 9, 10, 11, 14, 15, 17, 18, 19, 20]);
+// returns "-6,-3-1,3-5,7-11,14,15,17-20"
+Courtesy of rosettacode.org

@@ -1,40 +1,39 @@
-package johnann
-
-fun john(n: Long): List<Long> = (0 until n.toInt()).map { johnL(it) }
-
-fun johnL(n: Int): Long {
-    if (Storage.john.size < n + 1) {
-        if (n == 0)
-            Storage.john.add(0)
-        else {
-            val t = johnL(n - 1)
-            val j = n - annL(t.toInt())
-            Storage.john.add(j)
+fun rangeExtraction(arr: IntArray): String {
+    val result = mutableListOf<MutableList<Int>>()
+    val temp = mutableListOf<Int>()
+//    temp.add(arr.first())
+    for (i in arr.indices) {
+        if (arr[i] + 1 == arr[i + 1]) {
+            temp.add(arr[i])
+            if (i == arr.lastIndex - 1) {
+                temp.add(arr[i + 1])
+                result.add(temp.toMutableList())
+                break
+            }
+        } else {
+            if (i != 0 && arr[i] - 1 == arr[i - 1]) {
+                temp.add(arr[i])
+                if (temp.size < 3) {
+                    temp.forEach { result.add(mutableListOf(it)) }
+                } else {
+                    result.add(temp.toMutableList())
+                }
+                temp.clear()
+                continue
+            }
+            if (i == arr.lastIndex - 1) {
+                result.add(mutableListOf(arr.last()))
+                break
+            } else {
+                result.add(mutableListOf(arr[i]))
+            }
         }
     }
-    return Storage.john[n]
-}
-
-fun ann(n: Long): List<Long> = (0 until n.toInt()).map { annL(it) }
-
-fun annL(n: Int): Long {
-    if (Storage.ann.size < n + 1) {
-        if (n == 0)
-            Storage.ann.add(1)
-        else {
-            val t = annL(n - 1)
-            val j = n - johnL(t.toInt())
-            Storage.ann.add(j)
+    return result.joinToString(",") {
+        if (it.size == 1) {
+            it.first().toString()
+        } else {
+            "${it.first()}-${it.last()}"
         }
     }
-    return Storage.ann[n]
-}
-
-fun sumJohn(n: Long) = john(n).sum()
-
-fun sumAnn(n: Long) = ann(n).sum()
-
-object Storage {
-    var john = mutableListOf<Long>()
-    var ann = mutableListOf<Long>()
 }
